@@ -5,6 +5,11 @@ requires-python = ">=3.13"
 package-mode = false
 dependencies = []
 
+[tool.poetry]
+packages = [
+    { include = "webapp", from = "." }
+]
+
 [tool.uv.workspace]
 members = [
     "webapp",
