@@ -8,6 +8,16 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 
+def extract(value):
+    if pd.isna(value):
+        return np.nan
+
+    try:
+        return float(str(value).split(" ")[0])
+    except:
+        return np.nan
+
+
 def eda():
     st.header("📊 Exploratory Data Analysis (EDA)")
 
@@ -24,6 +34,15 @@ def eda():
     if uploaded_file_eda is not None:
         try:
             df_eda = pd.read_csv(uploaded_file_eda)
+
+            if "mileage" in df_eda.columns:
+                df_eda["mileage"] = df_eda["mileage"].apply(extract)
+
+            if "engine" in df_eda.columns:
+                df_eda["engine"] = df_eda["engine"].apply(extract)
+
+            if "max_power" in df_eda.columns:
+                df_eda["max_power"] = df_eda["max_power"].apply(extract)
 
             st.subheader("📋 Общая информация о данных")
 

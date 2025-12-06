@@ -8,6 +8,16 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 
+def extract(value):
+    if pd.isna(value):
+        return np.nan
+
+    try:
+        return float(str(value).split(" ")[0])
+    except:
+        return np.nan
+
+
 def analyze(model, onehot_encoder):
     st.header("🔍 Анализ модели")
 
@@ -31,6 +41,10 @@ def analyze(model, onehot_encoder):
     if test_file is not None:
         try:
             df_test = pd.read_csv(test_file)
+
+            df_test["mileage"] = df_test["mileage"].apply(extract)
+            df_test["engine"] = df_test["engine"].apply(extract)
+            df_test["max_power"] = df_test["max_power"].apply(extract)
 
             if "selling_price" not in df_test.columns:
                 st.error("❌ В данных отсутствует колонка 'price' - целевая переменная")

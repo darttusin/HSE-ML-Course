@@ -49,6 +49,10 @@ def single_predict_tab(model, onehot_encoder):
         submitted = st.form_submit_button("Предсказать цену")
 
     if submitted:
+        mileage = float(str(mileage).split(" ")[0])
+        engine = float(str(engine).split(" ")[0])
+        max_power = float(str(max_power).split(" ")[0])
+
         numeric_data = pd.DataFrame(
             [[year, km_driven, mileage, engine, max_power]],
             columns=settings.numeric_features,  # type: ignore

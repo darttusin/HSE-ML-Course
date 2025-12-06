@@ -3,6 +3,18 @@ import pandas as pd
 import base64
 from config import settings
 
+import numpy as np
+
+
+def extract(value):
+    if pd.isna(value):
+        return np.nan
+
+    try:
+        return float(str(value).split(" ")[0])
+    except:
+        return np.nan
+
 
 def file_predict(model, onehot_encoder):
     st.header("Массовое предсказание по файлу")
@@ -40,6 +52,10 @@ def file_predict(model, onehot_encoder):
             if missing_columns:
                 st.error(f"Отсутствуют следующие колонки: {', '.join(missing_columns)}")
             else:
+                df["mileage"] = df["mileage"].apply(extract)
+                df["engine"] = df["engine"].apply(extract)
+                df["max_power"] = df["max_power"].apply(extract)
+
                 if st.button("Выполнить предсказания", type="primary"):
                     with st.spinner("Обработка данных..."):
                         numeric_df = df[settings.numeric_features]
