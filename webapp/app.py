@@ -7,6 +7,7 @@ from config import settings
 from tabs.eda import eda
 from tabs.file_predict import file_predict
 from tabs.single_predict import single_predict_tab
+from tabs.analyze import analyze
 
 st.set_page_config(page_title="Car Price Predictor", page_icon="🚗", layout="wide")
 
@@ -40,5 +41,4 @@ with tab3:
     eda()
 
 with tab4:
-    st.header("Анализ модели")
-    st.write("Здесь будет анализ важности признаков модели...")
+    analyze(model, onehot_encoder)
